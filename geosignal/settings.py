@@ -60,11 +60,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'geosignal.wsgi.application'
 
-POSTGRES_URL = os.environ.get('POSTGRES_URL') or config('DATABASE_URL', default='')
+POSTGRES_URL = os.environ.get('POSTGRES_URL') or os.environ.get('DATABASE_URL')
 if POSTGRES_URL:
     DATABASES = {'default': dj_database_url.config(default=POSTGRES_URL, conn_max_age=600, conn_health_checks=True)}
 elif config('USE_POSTGRES', default=False, cast=bool):
-    DATABASES = {'default': dj_database_url.config(default=config('DATABASE_URL', default=''), conn_max_age=600, conn_health_checks=True)}
+    DATABASES['default'] = dj_database_url.config(default=config('DATABASE_URL', default=''), conn_max_age=600, conn_health_checks=True)
     if not DATABASES['default'].get('NAME'):
         DATABASES['default'] = {
             'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
