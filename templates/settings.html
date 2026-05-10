@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% load static %}{% block title %}Settings - Geosginal{% endblock %}{% block extra_css %}{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header"><h1>Settings</h1><p>Dashboard customization, API monitoring, and system preferences</p></div>
+<div class="analytics-grid">
+<div class="panel"><div class="panel-header"><h2>Dashboard Customization</h2></div><div class="panel-body">
+<div class="settings-group"><label class="settings-label">Default Map Center</label><div class="settings-row"><div class="filter-group"><input type="text" id="defaultLat" class="form-control" placeholder="Latitude" value="52.52"></div><div class="filter-group"><input type="text" id="defaultLon" class="form-control" placeholder="Longitude" value="13.405"></div><button class="btn-action btn-action-edit" id="saveMapCenterBtn">Save</button></div></div>
+<div class="settings-group"><label class="settings-label">Default Zoom Level</label><select id="defaultZoom" class="form-control" style="max-width:200px"><option value="8">City</option><option value="10" selected>Region</option><option value="12">Detailed</option><option value="14">Street</option></select></div>
+<div class="settings-group"><label class="settings-label">Theme</label><div class="theme-options"><button class="theme-btn active" data-theme="light"><i class="fas fa-sun"></i> Light</button><button class="theme-btn" data-theme="dark"><i class="fas fa-moon"></i> Dark</button><button class="theme-btn" data-theme="auto"><i class="fas fa-cog"></i> Auto</button></div></div>
+</div></div>
+<div class="panel"><div class="panel-header"><h2>API Monitoring</h2></div><div class="panel-body">
+<div class="api-status-list" id="apiStatusList"><div class="loading-state"><i class="fas fa-spinner fa-spin"></i><p>Checking API status...</p></div></div>
+</div></div>
+</div>
+<div class="panel full-width"><div class="panel-header"><h2>System Health</h2><button class="btn-action btn-action-edit" id="runHealthCheckBtn"><i class="fas fa-heartbeat"></i> Run Check</button></div><div class="panel-body">
+<div class="health-grid" id="healthGrid"><div class="loading-state"><i class="fas fa-heartbeat"></i><p>Run a health check to see system status</p></div></div>
+</div></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/settings.js' %}"></script>{% endblock %}

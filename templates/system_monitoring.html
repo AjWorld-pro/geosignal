@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% load static %}{% block title %}System Monitoring - Geosginal{% endblock %}{% block extra_css %}{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header"><h1>System Monitoring</h1><p>Platform usage statistics, most scanned locations, and traffic monitoring</p></div>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-icon-wrap emerald"><i class="fas fa-users"></i></div><div class="stat-content"><p class="stat-label">Active Users Today</p><p class="stat-value" id="activeUsersToday">--</p></div></div>
+<div class="stat-card"><div class="stat-icon-wrap cyan"><i class="fas fa-search"></i></div><div class="stat-content"><p class="stat-label">Total Scans</p><p class="stat-value" id="totalScans">--</p></div></div>
+<div class="stat-card"><div class="stat-icon-wrap purple"><i class="fas fa-map-marker-alt"></i></div><div class="stat-content"><p class="stat-label">Locations Scanned</p><p class="stat-value" id="locationsScanned">--</p></div></div>
+<div class="stat-card"><div class="stat-icon-wrap amber"><i class="fas fa-tachometer-alt"></i></div><div class="stat-content"><p class="stat-label">API Calls Today</p><p class="stat-value" id="apiCallsToday">--</p></div></div>
+</div>
+<div class="analytics-grid">
+<div class="panel"><div class="panel-header"><h2>Most Scanned Locations</h2></div><div class="panel-body"><div class="most-scanned-list" id="mostScannedList"><div class="loading-state"><i class="fas fa-spinner fa-spin"></i><p>Loading locations...</p></div></div></div></div>
+<div class="panel"><div class="panel-header"><h2>Platform Usage</h2></div><div class="panel-body"><canvas id="usageChart"></canvas></div></div>
+</div>
+<div class="panel full-width"><div class="panel-header"><h2>Traffic Monitoring</h2><div class="header-actions"><select id="trafficPeriod" class="form-control" style="width:auto"><option value="24h">Last 24 Hours</option><option value="7d">Last 7 Days</option><option value="30d" selected>Last 30 Days</option></select></div></div><div class="panel-body"><canvas id="trafficChart"></canvas></div></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/system_monitoring.js' %}"></script>{% endblock %}

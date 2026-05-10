@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% load static %}{% block title %}Data Management - Geosginal{% endblock %}{% block extra_css %}{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header"><h1>Data Management</h1><p>Import, export, and manage platform data</p></div>
+<div class="analytics-grid">
+<div class="panel"><div class="panel-header"><h2>Database Statistics</h2></div><div class="panel-body">
+<div class="db-stats">
+<div class="db-stat-item"><span class="db-stat-label">Networks</span><span class="db-stat-value" id="dbNetworks">--</span></div>
+<div class="db-stat-item"><span class="db-stat-label">BTS Towers</span><span class="db-stat-value" id="dbBts">--</span></div>
+<div class="db-stat-item"><span class="db-stat-label">Measurements</span><span class="db-stat-value" id="dbMeasurements">--</span></div>
+<div class="db-stat-item"><span class="db-stat-label">Users</span><span class="db-stat-value" id="dbUsers">--</span></div>
+<div class="db-stat-item"><span class="db-stat-label">Scans</span><span class="db-stat-value" id="dbScans">--</span></div>
+<div class="db-stat-item"><span class="db-stat-label">DB Size</span><span class="db-stat-value" id="dbSize">--</span></div>
+</div>
+</div></div>
+<div class="panel"><div class="panel-header"><h2>Import / Export</h2></div><div class="panel-body">
+<div class="data-actions"><button class="btn-action btn-action-edit" id="exportAllDataBtn"><i class="fas fa-download"></i> Export</button><button class="btn-action btn-action-approve" id="importDataBtn"><i class="fas fa-upload"></i> Import</button><button class="btn-action btn-action-edit" id="backupDatabaseBtn"><i class="fas fa-archive"></i> Backup</button></div>
+<div class="table-responsive"><table class="data-table"><thead><tr><th>Backup</th><th>Date</th><th>Size</th><th>Actions</th></tr></thead><tbody id="backupsTable"><tr class="loading-row"><td colspan="4" class="loading-cell">Loading backups...</td></tr></tbody></table></div>
+</div></div>
+</div>
+<div class="panel full-width"><div class="panel-header"><h2>Data Cleanup</h2></div><div class="panel-body">
+<div class="cleanup-actions"><button class="btn-action btn-action-delete" id="cleanupOldScansBtn"><i class="fas fa-trash"></i> Purge Old Scans</button><button class="btn-action btn-action-delete" id="cleanupLogsBtn"><i class="fas fa-trash"></i> Purge Old Logs</button><button class="btn-action btn-action-delete" id="vacuumDatabaseBtn"><i class="fas fa-compress"></i> Vacuum DB</button></div>
+</div></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/data_management.js' %}"></script>{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}Geosginal - Network Coverage Intelligence{% endblock %}
+{% block content %}
+<div class="hero-section">
+    <h1>Network Coverage Intelligence</h1>
+    <p>Search any location to find available networks (2G/EDGE, 3G, 4G LTE, 5G), signal strength, nearby BTS towers, congestion, and the best provider recommendation</p>
+    <div class="location-search">
+        <input type="text" id="locationSearch" placeholder="e.g. Lagos, Nigeria or 6.5244, 3.3792" autocomplete="off">
+        <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+        <button id="geolocateBtn" class="btn-locate" title="Use my location"><i class="fas fa-crosshairs"></i></button>
+    </div>
+</div>
+<div class="container">
+    <div id="locationResults" class="location-results" style="display:none;"></div>
+    <div class="card full-width" id="welcomeCard">
+        <div class="card-header"><h2>Get Started</h2></div>
+        <div class="card-body">
+            <div class="empty-state"><i class="fas fa-search-location"></i><h3>Search a location to begin</h3><p>Enter a city name (e.g. Lagos, Berlin) or coordinates (e.g. 6.5244, 3.3792) above, then click Search. The platform will analyze all available networks, BTS towers, and signal quality at that location.</p></div>
+        </div>
+    </div>
+    <div class="card full-width">
+        <div class="card-header"><h2>Coverage Map</h2></div>
+        <div class="card-body"><div id="map"></div></div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/map.js' %}"></script>{% endblock %}

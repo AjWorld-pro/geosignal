@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% load static %}{% block title %}User Management - Geosginal{% endblock %}{% block extra_css %}{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header"><h1>User Management</h1><p>Manage users, roles, and access permissions</p></div>
+<div class="card"><div class="card-header"><h2>Users</h2><div class="header-actions"><button class="btn btn-primary btn-small" id="addUserBtn"><i class="fas fa-plus"></i> Add User</button></div></div><div class="card-body">
+<div class="user-cards" id="usersList"><div class="loading-state"><i class="fas fa-spinner fa-spin"></i><p>Loading users...</p></div></div>
+<p style="text-align:center;color:var(--slate-400);font-size:0.75rem;margin-top:16px">Showing <span id="userCount">0</span> users</p>
+</div></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/user_management.js' %}"></script>{% endblock %}

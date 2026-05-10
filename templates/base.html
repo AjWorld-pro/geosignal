@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Geosginal - Network Coverage Analysis{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span>Geosginal</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <a href="{% url 'map' %}" class="sidebar-link {% if request.path == '/' %}active{% endif %}">
+                    <i class="fas fa-map-location-dot"></i> <span>Map</span>
+                </a>
+                <a href="{% url 'settings' %}" class="sidebar-link {% if '/settings/' in request.path %}active{% endif %}">
+                    <i class="fas fa-sliders-h"></i> <span>Settings</span>
+                </a>
+
+                {% if user.is_staff %}
+                <div class="sidebar-label">Admin</div>
+                <a href="{% url 'user_management' %}" class="sidebar-link {% if '/admin/users/' in request.path %}active{% endif %}">
+                    <i class="fas fa-users-cog"></i> <span>Users</span>
+                </a>
+                <a href="{% url 'system_monitoring' %}" class="sidebar-link {% if '/admin/monitoring/' in request.path %}active{% endif %}">
+                    <i class="fas fa-desktop"></i> <span>Monitoring</span>
+                </a>
+                <a href="{% url 'data_management' %}" class="sidebar-link {% if '/admin/data/' in request.path %}active{% endif %}">
+                    <i class="fas fa-database"></i> <span>Data</span>
+                </a>
+                <a href="{% url 'security_logs' %}" class="sidebar-link {% if '/admin/security-logs/' in request.path %}active{% endif %}">
+                    <i class="fas fa-shield-alt"></i> <span>Security</span>
+                </a>
+                {% endif %}
+            </div>
+            <div class="sidebar-footer">
+                <a href="{% url 'logout' %}" class="sidebar-link">
+                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-navbar">
+                <div class="top-navbar-left">
+                    <button class="sidebar-toggle-mobile" id="sidebarToggleMobile">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="navbar-title">
+                        <h1>{% block header_title %}Geosginal{% endblock %}</h1>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    {% csrf_token %}
+
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/api.js' %}"></script>
+    <script src="{% static 'js/utils.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% load static %}{% block title %}Security Logs - Geosginal{% endblock %}{% block extra_css %}{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header"><h1>Security Logs</h1><p>Activity logs, access control monitoring, and security events</p></div>
+<div class="panel"><div class="panel-header"><h2>Activity Logs</h2><div class="header-actions">
+<button class="btn-action btn-action-edit" id="exportLogsBtn"><i class="fas fa-download"></i> Export</button>
+<button class="btn-action btn-action-approve" id="refreshLogsBtn"><i class="fas fa-sync"></i> Refresh</button>
+</div></div><div class="panel-body">
+<div class="log-filters"><div class="filter-group"><label>Event Type</label><select id="logEventType" class="form-control"><option value="">All Events</option><option value="login">Login</option><option value="logout">Logout</option><option value="failed_login">Failed Login</option><option value="permission_change">Permission Change</option><option value="data_export">Data Export</option><option value="settings_change">Settings Change</option></select></div><div class="filter-group"><label>User</label><input type="text" id="logUserFilter" class="form-control" placeholder="Filter by username"></div><div class="filter-group"><label>Date From</label><input type="date" id="logDateFrom" class="form-control"></div><div class="filter-actions"><button class="btn-action btn-action-edit" id="applyLogFiltersBtn"><i class="fas fa-filter"></i> Apply</button></div></div>
+<div class="log-console" id="logConsole"><div class="log-console-header"><span class="log-console-dot red"></span><span class="log-console-dot yellow"></span><span class="log-console-dot green"></span><span style="margin-left:8px">security@geosginal:~$ tail -f /var/log/auth.log</span></div><div class="log-console-body" id="logsBody"><div style="padding:20px;text-align:center;color:#484f58"><i class="fas fa-spinner fa-spin"></i> Loading logs...</div></div></div>
+<div class="pagination" id="logsPagination"></div>
+</div></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/security_logs.js' %}"></script>{% endblock %}
