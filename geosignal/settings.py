@@ -8,14 +8,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ======================
 # SECURITY
 # ======================
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='localhost,127.0.0.1,.vercel.app,.onrender.com'
+    default='localhost,127.0.0.1,.vercel.app'
 ).split(',')
+
+# REQUIRED FOR VERCEL (fixes 403 CSRF issue)
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app"
+]
 
 # ======================
 # APPS
@@ -78,7 +83,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'geosignal.wsgi.application'
 
 # ======================
-# DATABASE (SAFE FIXED)
+# DATABASE
 # ======================
 POSTGRES_URL = os.environ.get('POSTGRES_URL') or os.environ.get('DATABASE_URL')
 
@@ -90,16 +95,6 @@ if POSTGRES_URL:
             conn_health_checks=True
         )
     }
-
-elif config('USE_POSTGRES', default=False, cast=bool):
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=config('DATABASE_URL', default=''),
-            conn_max_age=600,
-            conn_health_checks=True
-        )
-    }
-
 else:
     DATABASES = {
         'default': {
@@ -109,7 +104,7 @@ else:
     }
 
 # ======================
-# PASSWORD VALIDATION
+# AUTH
 # ======================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -133,7 +128,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# IMPORTANT: no manifest storage (prevents 500 error)
+# SAFE STATIC STORAGE (NO MANIFEST ERROR)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # ======================
@@ -157,10 +152,6 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter'
     ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ],
 }
 
 # ======================
@@ -168,23 +159,5 @@ REST_FRAMEWORK = {
 # ======================
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:3000,http://localhost:8000,http://127.0.0.1:3000,http://127.0.0.1:8000'
+    default='http://localhost:3000,http://localhost:8000'
 ).split(',')
-
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r'^https://.*\.vercel\.app$',
-]
-
-# ======================
-# CELERY
-# ======================
-USE_CELERY = config('USE_CELERY', default=False, cast=bool)
-
-if USE_CELERY:
-    REDIS_URL = config('REDIS_URL', default='redis://127.0.0.1:6379/0')
-    CELERY_BROKER_URL = REDIS_URL
-    CELERY_RESULT_BACKEND = REDIS_URL
-    CELERY_ACCEPT_CONTENT = ['json']
-    CELERY_TASK_SERIALIZER = 'json'
-else:
-    CELERY_TASK_ALWAYS_EAGER = True
