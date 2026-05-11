@@ -6,6 +6,7 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -92,6 +93,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
 
 if DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
